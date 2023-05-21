@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:projekakhir_tpm/view/register_page.dart';
-import '../helper/hive_database.dart';
-import '../navbar.dart';
+import 'package:projekakhir_tpm/view/auth/register_page.dart';
+import '../../controller/hive_database.dart';
+import '../../navbar.dart';
+import 'package:bcrypt/bcrypt.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -37,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
                     width: 300,
                     child: RichText(
                         text: const TextSpan(
-                            text: 'OnlyREVLONThings',
+                            text: 'REVLONThings',
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 32,
@@ -224,7 +225,18 @@ class _LoginPageState extends State<LoginPage> {
     bool found = false;
 
     found = _hive.checkLogin(username, password);
+    // Retrieve the hashed password from your database or storage based on the username
+    String? hashedPassword = _hive.getHashedPassword(username);
 
+    if (hashedPassword != null) {
+      // Compare the provided password with the hashed password using bcrypt's comparePassword method
+      bool isPasswordMatch =
+          await _hive.comparePassword(password, hashedPassword);
+
+      if (isPasswordMatch) {
+        found = true;
+      }
+    }
     if (!found) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

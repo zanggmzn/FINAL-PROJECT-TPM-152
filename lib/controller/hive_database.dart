@@ -1,8 +1,9 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:projekakhir_tpm/helper/shared_preference.dart';
+import 'package:projekakhir_tpm/controller/shared_preference.dart';
 import 'package:projekakhir_tpm/model/data_model.dart';
+import 'package:bcrypt/bcrypt.dart';
 
-class HiveDatabase{
+class HiveDatabase {
   Box<DataModel> _localDB = Hive.box<DataModel>("data");
 
   void addData(DataModel data) {
@@ -15,7 +16,7 @@ class HiveDatabase{
 
   bool checkLogin(String username, String password) {
     bool found = false;
-    for(int i = 0; i< getLength(); i++){
+    for (int i = 0; i < getLength(); i++) {
       if (username == _localDB.getAt(i)!.username && password == _localDB.getAt(i)!.password) {
         SharedPreference().setLogin(username);
         print("Login Success");
@@ -29,4 +30,16 @@ class HiveDatabase{
     return found;
   }
 
+  String? getHashedPassword(String username) {
+    for (int i = 0; i < getLength(); i++) {
+      if (username == _localDB.getAt(i)!.username) {
+        return _localDB.getAt(i)!.password;
+      }
+    }
+    return null; // Return null if the username is not found
+  }
+
+  Future<bool> comparePassword(String password, String hashedPassword) async {
+    return await BCrypt.checkpw(password, hashedPassword);
+  }
 }

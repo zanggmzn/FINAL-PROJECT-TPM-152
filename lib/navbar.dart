@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:projekakhir_tpm/view/bantuan.dart';
-import 'package:projekakhir_tpm/view/category/category_blush.dart';
-import 'package:projekakhir_tpm/view/category/lipstick.dart';
-import 'package:projekakhir_tpm/view/category/menu_category.dart';
+import 'package:projekakhir_tpm/view/extramenu.dart';
+import 'package:projekakhir_tpm/view/profile/profile.dart';
+import 'package:projekakhir_tpm/view/category/category.dart';
+import 'package:projekakhir_tpm/view/category/blush.dart';
 
 class Nav extends StatefulWidget {
   @override
@@ -13,9 +13,9 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   int _selectedIndex = 0;
   final List<Widget> _widgetOptions = <Widget>[
-    const MenuUtama(),
-    const CategoryBlush(),
-    const Bantuan(),
+    const Category(),
+    const ExtraMenu(),
+    const Profil(),
   ];
 
   void _onItemTap(int index) {
@@ -31,13 +31,13 @@ class _NavState extends State<Nav> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Container(
-        color: Colors.black,
+        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
           child: GNav(
-            backgroundColor: Colors.black,
-            color: Colors.white,
-            tabBackgroundColor: Colors.grey.shade800,
+            backgroundColor: Colors.white,
+            color: Colors.black,
+            tabBackgroundColor: Color.fromARGB(255, 170, 170, 170),
             gap: 8,
             onTabChange: (index) {
               setState(
@@ -49,7 +49,7 @@ class _NavState extends State<Nav> {
             padding: const EdgeInsets.all(16),
             tabs: const [
               GButton(icon: Icons.home, text: 'Home'),
-              GButton(icon: Icons.favorite_border, text: 'Likes'),
+              GButton(icon: Icons.add, text: 'Extra Menu'),
              GButton(icon: Icons.account_box, text: 'Profile'),
             ],
           ),

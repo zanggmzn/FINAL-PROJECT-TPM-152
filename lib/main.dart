@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:projekakhir_tpm/navbar.dart';
-import 'package:projekakhir_tpm/view/login_page.dart';
-import 'helper/shared_preference.dart';
+import 'package:projekakhir_tpm/view/auth/login_page.dart';
+import 'controller/shared_preference.dart';
 import 'model/data_model.dart';
 
 void main() async {

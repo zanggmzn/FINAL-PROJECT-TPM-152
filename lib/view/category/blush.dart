@@ -5,15 +5,15 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:projekakhir_tpm/view/category/product_detail.dart';
 
-class LipstickCategory extends StatefulWidget {
-  const LipstickCategory({super.key});
+class CategoryBlush extends StatefulWidget {
+  const CategoryBlush({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _LipstickCategoryState createState() => _LipstickCategoryState();
+  _CategoryBlushState createState() => _CategoryBlushState();
 }
 
-class _LipstickCategoryState extends State<LipstickCategory> {
+class _CategoryBlushState extends State<CategoryBlush> {
   List home = [];
   bool load = false;
 
@@ -29,7 +29,7 @@ class _LipstickCategoryState extends State<LipstickCategory> {
       load = true;
     });
     var url =
-        "https://makeup-api.herokuapp.com/api/v1/products.json?brand=revlon&&product_type=lipstick";
+        "https://makeup-api.herokuapp.com/api/v1/products.json?brand=revlon&&product_type=blush";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       List items = (json.decode(response.body) as List)
@@ -53,7 +53,7 @@ class _LipstickCategoryState extends State<LipstickCategory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Plumpy Lippie",style: TextStyle(color: Colors.black)),
+        title: const Text("Rosy Cheeks",style: TextStyle(color: Colors.black)),
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 232, 179, 203),
       ),
@@ -77,7 +77,6 @@ class _LipstickCategoryState extends State<LipstickCategory> {
   }
 
   Widget getCard(item) {
-    
     var id = item['id'];
     var title = item['name'];
     var thumbnail = item['image_link'];
