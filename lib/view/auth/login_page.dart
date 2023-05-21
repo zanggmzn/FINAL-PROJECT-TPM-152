@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Image.asset('images/landing.png'),
                   ),
                   Container(
-                    height: size.height * .21,
+                    height: size.height * .3,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius:
@@ -111,6 +111,12 @@ class _LoginPageState extends State<LoginPage> {
                                           border: InputBorder.none,
                                           hintText: 'Username',
                                         ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Username is Required';
+                                          }
+                                          return null;
+                                        },
                                       ),
                                     ),
                                   ],
@@ -124,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                               ],
                             )),
                         Positioned(
-                            top: 120,
+                            top: 150,
                             left: 20,
                             child: Column(
                               children: [
@@ -147,6 +153,12 @@ class _LoginPageState extends State<LoginPage> {
                                           border: InputBorder.none,
                                           hintText: 'Password',
                                         ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Password is Required';
+                                          }
+                                          return null;
+                                        },
                                       ),
                                     ),
                                   ],
@@ -227,8 +239,8 @@ class _LoginPageState extends State<LoginPage> {
     found = _hive.checkLogin(username, password);
     // Retrieve the hashed password from your database or storage based on the username
     String? hashedPassword = _hive.getHashedPassword(username);
-
-    if (hashedPassword != null) {
+    if (_formKey.currentState!.validate()){
+       if (hashedPassword != null) {
       // Compare the provided password with the hashed password using bcrypt's comparePassword method
       bool isPasswordMatch =
           await _hive.comparePassword(password, hashedPassword);
@@ -236,6 +248,7 @@ class _LoginPageState extends State<LoginPage> {
       if (isPasswordMatch) {
         found = true;
       }
+    }
     }
     if (!found) {
       ScaffoldMessenger.of(context).showSnackBar(

@@ -42,10 +42,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     borderRadius: BorderRadius.circular(15),
                   ),
                 ),
-                validator: (String? value) {
-                  if (value!.trim().isEmpty) {
-                    return 'Username is required';
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Username is Required';
                   }
+                  return null;
                 },
               ),
               SizedBox(height: 30),
@@ -59,10 +60,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     borderRadius: BorderRadius.circular(15),
                   ),
                 ),
-                validator: (String? value) {
-                  if (value!.trim().isEmpty) {
-                    return 'Password is required';
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Username is Required';
                   }
+                  return null;
                 },
               ),
               SizedBox(height: 30),
@@ -124,6 +126,13 @@ class _RegisterPageState extends State<RegisterPage> {
             context,
             MaterialPageRoute(
               builder: (context) => const LoginPage(),
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Username dan Password Harus Diisi!'),
+              backgroundColor: Colors.red,
             ),
           );
         }
